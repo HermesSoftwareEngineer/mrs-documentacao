@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "mrs-fornecedores": {
+      "command": "C:\\Users\\Hermes\\projetos_dev\\mrs-documentacao\\.venv\\Scripts\\python.exe",
+      "args": [
+        "C:\\Users\\Hermes\\projetos_dev\\mrs-documentacao\\mcp_server.py"
+      ],
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "HF_HUB_OFFLINE": "1"
+      }
+    }
+  }
+}

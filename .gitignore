@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+models/
+data/pdfs/ri/
+data/outros/
+data/*.log

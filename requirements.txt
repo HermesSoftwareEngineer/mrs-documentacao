@@ -1,0 +1,10 @@
+beautifulsoup4==4.15.0
+chromadb==1.5.9
+fastembed==0.8.1
+mcp==2.2.0
+numpy==2.4.6
+onnxruntime==1.30.0
+pymupdf==1.28.2
+rapidocr==3.9.2
+requests==2.34.2
+truststore==0.10.4
