@@ -1,0 +1,13 @@
+services:
+  mrs-fornecedores-mcp:
+    build: .
+    image: mrs-fornecedores-mcp:latest
+    ports:
+      - "8000:8000"
+    env_file: .env          # MCP_PASSWORD e MCP_PUBLIC_URL (veja .env.example)
+    volumes:
+      - oauth-state:/app/state   # clientes registrados e tokens sobrevivem a reinícios
+    restart: unless-stopped
+
+volumes:
+  oauth-state:

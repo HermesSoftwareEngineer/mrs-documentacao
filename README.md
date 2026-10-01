@@ -37,9 +37,30 @@ mcp_server.py             servidor MCP (stdio)
 - **Claude Desktop**: entrada `mrs-fornecedores` em `%APPDATA%\Claude\claude_desktop_config.json` (já adicionada; reinicie o app).
 - Outros clientes MCP: comando `.venv\Scripts\python.exe mcp_server.py`, env `PYTHONIOENCODING=utf-8`, `HF_HUB_OFFLINE=1`.
 
+## Deploy com Docker (HTTP + OAuth)
+
+No container o servidor roda em **Streamable HTTP** (`/mcp`) com **OAuth 2.1** embutido: o próprio
+servidor é o authorization server e o login é uma página com uma senha única.
+
+```bash
+cp .env.example .env        # defina MCP_PASSWORD e MCP_PUBLIC_URL
+docker compose up -d --build
+```
+
+- A imagem já contém o índice (`data/index`) e o modelo de embeddings; não precisa de rede em runtime.
+- Coloque atrás de um proxy com HTTPS (Caddy, Nginx, Traefik, Cloudflare Tunnel) e use essa URL em `MCP_PUBLIC_URL`.
+- Clientes MCP remotos (ex.: Claude → Configurações → Conectores → *Adicionar conector personalizado*)
+  recebem só a URL `https://<seu-domínio>/mcp`; o cliente se registra sozinho, abre a página de senha e obtém o token.
+- Endpoints: `/mcp`, `/health`, `/login`, `/authorize`, `/token`, `/register`, `/revoke`,
+  `/.well-known/oauth-authorization-server`, `/.well-known/oauth-protected-resource/mcp`.
+- Tokens: acesso 1 h, refresh 30 dias (com rotação); guardados como hash em SQLite no volume `oauth-state`.
+- Sem `MCP_PASSWORD` (ou com `AUTH_MODE=none`) o servidor fica aberto, útil só para testes locais.
+- Para trocar a senha, altere o `.env` e reinicie; para derrubar todas as sessões, apague o volume `oauth-state`.
+
 ## Atualizar
 
 ```bash
+.venv/Scripts/pip install -r requirements-index.txt
 .venv/Scripts/python scripts/download_pdfs.py
 .venv/Scripts/python scripts/build_index.py
 ```

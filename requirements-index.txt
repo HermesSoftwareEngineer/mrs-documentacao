@@ -1,0 +1,6 @@
+# Download e indexação (só necessário para atualizar o índice)
+-r requirements.txt
+beautifulsoup4==4.15.0
+pymupdf==1.28.2
+rapidocr==3.9.2
+requests==2.34.2

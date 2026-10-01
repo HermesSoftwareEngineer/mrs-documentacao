@@ -5,3 +5,5 @@ models/
 data/pdfs/ri/
 data/outros/
 data/*.log
+.env
+data/state/
